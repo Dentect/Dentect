@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const patientSchema = new mongoose.Schema({
+const xraySchema = new mongoose.Schema({
     originalURL: {
         type: String,
         required: true,
@@ -13,11 +13,11 @@ const patientSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    xRayDate: {
+    xrayDate: {
         type: Date,
         required: true,
     },
 }, { timestamps: true });
 
-const Patient = mongoose.model('patients', patientSchema);
-export default Patient;
+const Xray = mongoose.model('xrays', xraySchema);
+export default Xray;

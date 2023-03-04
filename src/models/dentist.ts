@@ -41,8 +41,11 @@ const dentistSchema = new mongoose.Schema({
         type: String,
     },
     patients: [{
-        type: mongoose.Types.ObjectId,
-        ref: 'Patient',
+        patientId: {
+            type: mongoose.Types.ObjectId,
+            ref: 'Patient',
+        },
+        patientName: String,
     }],
 }, { timestamps: true });
 
