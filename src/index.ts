@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import authRouter from './routes/authRoutes';
+import dentistRouter from './routes/dentistRoutes';
 
 require('dotenv').config();
 
@@ -14,6 +15,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/auth', authRouter);
+app.use('/dentists', dentistRouter);
 app.use('/public', express.static('public'));
 
 (async function () {
