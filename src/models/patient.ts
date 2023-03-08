@@ -50,8 +50,10 @@ const patientSchema = new mongoose.Schema({
         type: String,
     },
     xRays: [{
-        type: mongoose.Types.ObjectId,
-        ref: 'XRays',
+        xrayId: {
+            type: mongoose.Types.ObjectId,
+            ref: 'XRays',
+        },
     }],
 }, { timestamps: true });
 
