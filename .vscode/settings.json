@@ -12,7 +12,11 @@
     }
   ],
   "cSpell.words": [
+    "fieldname",
     "maxlength",
-    "MONGOURI"
+    "middlewares",
+    "MODELURL",
+    "MONGOURI",
+    "xrays"
   ]
 }
