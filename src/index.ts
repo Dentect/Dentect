@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/public', express.static('public'));
 
-(async function() {
+(async function () {
 
     try {
 
@@ -24,13 +24,19 @@ app.use('/public', express.static('public'));
             {
                 useNewUrlParser: true,
                 useUnifiedTopology: true,
-                useFindAndModify: false,
+                useFindAndModify: true,
                 useCreateIndex: true,
-            },
-            () => {
-                console.log('connected to database');
-            }
-        );
+            })
+            .then(() => {
+                app.listen(port, () => {
+                    console.log('connected to database');
+                    console.log(`server is running on port ${port}`);
+                });
+            })
+            .catch(err => {
+                console.error('failed to connect to mongodb:\n', err);
+                process.exit(1);
+            });
 
         // 404 handler
         app.use((req, res, next) => {
@@ -57,12 +63,8 @@ app.use('/public', express.static('public'));
 
         }) as express.ErrorRequestHandler);
 
-
-        app.listen(port, () => {
-            console.log(`server is running on port ${port}`);
-        });
-
     } catch (error) {
         console.log(`Error! ${error}`);
+        process.exit(1);
     }
 })();
