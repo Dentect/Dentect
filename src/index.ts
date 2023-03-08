@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
+import authRouter from './routes/authRoutes';
 
 require('dotenv').config();
 
@@ -12,6 +13,7 @@ const mongoURI = process.env.MONGOURI || 'mongodb://localhost:27017/dental-disea
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use('/auth', authRouter);
 app.use('/public', express.static('public'));
 
 (async function () {
