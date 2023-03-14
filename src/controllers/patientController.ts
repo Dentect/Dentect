@@ -9,14 +9,10 @@ require('dotenv').config();
 
 export const addPatientXray = asyncHandler(async (req: express.Request, res: express.Response) => {
     const { patientId } = req.params;
-    let xray = req.body;
-
+    
     const patient = await Patient.findById(patientId);
-    if (req.file === undefined) {
-        res.status(400).json('X-ray not found.');
-        return;
-    }
-    xray.originalURL = req.file.path;
+    let xray = req.body;
+    xray.originalURL = req.body.originalURL;
     xray = await Xray.create(xray);
     patient.xRays.push(xray._id);
     await patient.save();
