@@ -1,7 +1,6 @@
 import express from 'express';
 import asyncHandler from 'express-async-handler';
 import axios from 'axios';
-import _ from 'lodash';
 
 import Xray from '../models/x-ray';
 import Patient from '../models/patient';
