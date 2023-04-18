@@ -13,6 +13,9 @@ const dentistSchema = new mongoose.Schema({
         minlength: 2,
         maxlength: 20
     },
+    userName: {
+        type: String,
+    },
     email: {
         type: String,
         required: true,
@@ -28,7 +31,6 @@ const dentistSchema = new mongoose.Schema({
     },
     yearsOfExperience: {
         type: Number,
-        required: true,
     },
     medicalId: {
         type: String,
@@ -46,6 +48,7 @@ const dentistSchema = new mongoose.Schema({
             ref: 'Patient',
         },
         patientName: String,
+        patientClinicId: Number,
     }],
 }, { timestamps: true });
 

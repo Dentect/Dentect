@@ -16,16 +16,21 @@ const patientSchema = new mongoose.Schema({
         type: String,
         required: true,
         minlength: 2,
-        maxlength: 20
+        maxlength: 20,
     },
     lastName: {
         type: String,
         required: true,
         minlength: 2,
-        maxlength: 20
+        maxlength: 20,
     },
     userName: {
         type: String,
+    },
+    clinicId: {
+        type: Number,
+        required: true,
+        unique: true,
     },
     gender: {
         type: Gender,
@@ -39,6 +44,9 @@ const patientSchema = new mongoose.Schema({
     birthDate: {
         type: Date,
         required: true,
+    },
+    age: {
+        type: Number,
     },
     phone: {
         type: String,
