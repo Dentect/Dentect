@@ -2,15 +2,21 @@ import express from 'express';
 import asyncHandler from 'express-async-handler';
 import axios from 'axios';
 import _ from 'lodash';
+
 import Xray from '../models/x-ray';
 import Patient from '../models/patient';
 
 require('dotenv').config();
 
 export const addPatientXray = asyncHandler(async (req: express.Request, res: express.Response) => {
-    const { patientId } = req.params;
-    
-    const patient = await Patient.findById(patientId);
+    const { patientClinicId } = req.params;
+
+    const patient = await Patient.findOne({ clinicId: Number(patientClinicId) });
+    if (!patient) {
+        res.status(401).json('Wrong patient clinic id.');
+        return;
+    }
+
     let xray = req.body;
     xray.originalURL = req.body.originalURL;
     xray = await Xray.create(xray);
@@ -27,16 +33,22 @@ export const addPatientXray = asyncHandler(async (req: express.Request, res: exp
     return;
 });
 
-// not finished
 export const getPatientXrays = asyncHandler(async (req: express.Request, res: express.Response) => {
-    const { patientId } = req.params;
-    const patient = await Patient.findById(patientId);
+    const { patientClinicId } = req.params;
+
+    const patient = await Patient.findOne({ clinicId: Number(patientClinicId) });
+    if (!patient) {
+        res.status(401).json('Wrong patient clinic id.');
+        return;
+    }
 
     const xrays: unknown[] = [];
-    _.forEach(patient.xRays, async (xray) => {
-        xray = await Xray.findById(xray.xrayId);
-        xrays.push(xray);
-    });
+    await Promise.all(
+        patient.xRays.map(async (xray: any) => {
+            xray = await Xray.findById(xray._id);
+            xrays.push(xray);
+        })
+    );
 
     res.json(xrays);
     return;

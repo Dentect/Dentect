@@ -2,6 +2,7 @@ import express from 'express';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import multer from 'multer';
 import path from 'path';
+
 import storage from '../config/firebaseConfig';
 
 export const upload = multer({ storage: multer.memoryStorage() });

@@ -1,6 +1,8 @@
 import express from 'express';
-import mongoose from 'mongoose';
+import cors from 'cors';
 import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+
 import authRouter from './routes/authRoutes';
 import dentistRouter from './routes/dentistRoutes';
 import patientRouter from './routes/patientRoutes';
@@ -11,14 +13,14 @@ const app: express.Application = express();
 const port = process.env.PORT || 3000;
 const mongoURI = process.env.MONGOURI || 'mongodb://localhost:27017/dental-diseases-detection';
 
-// body parser
+app.use(cors());
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/auth', authRouter);
 app.use('/dentists', dentistRouter);
 app.use('/patients', patientRouter);
-app.use('/public', express.static('public'));
 
 (async function () {
 
