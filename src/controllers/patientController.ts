@@ -28,7 +28,7 @@ export const addPatientXray = asyncHandler(async (req: express.Request, res: exp
     xray.report = response.data.report;
     xray.save();
 
-    res.json({ patient, xray });
+    res.json({ xray });
     return;
 });
 
