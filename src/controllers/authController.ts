@@ -52,6 +52,6 @@ export const signIn = asyncHandler(async (req: express.Request, res: express.Res
 
     const secret = process.env.ACCESS_TOKEN_SECRET || 'ACCESS TOKEN SECRET';
     const accessToken = jwt.sign({ dentistId: dentistFound._id }, secret);
-    res.header('auth-token', accessToken).send('Signed In.');
+    res.header('auth-token', accessToken).json(dentistFound);
     return;
 });
