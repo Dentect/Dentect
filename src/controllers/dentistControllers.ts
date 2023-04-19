@@ -83,6 +83,7 @@ export const editPatient = asyncHandler(async (req: express.Request, res: expres
     );
     await Patient.updateOne({ _id: patient._id }, updatedPatient);
     dentist.patients[patientIndex].patientName = updatedPatient.userName;
+    dentist.patients[patientIndex].patientClinicId = updatedPatient.clinicId;
     await dentist.save();
 
     res.json(updatedPatient);
