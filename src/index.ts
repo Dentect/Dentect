@@ -13,7 +13,11 @@ const app: express.Application = express();
 const port = process.env.PORT || 3000;
 const mongoURI = process.env.MONGOURI || 'mongodb://localhost:27017/dental-diseases-detection';
 
-app.use(cors());
+const corsOptions = {
+    exposedHeaders: 'auth-token',
+};
+
+app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

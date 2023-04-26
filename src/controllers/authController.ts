@@ -7,7 +7,6 @@ import Dentist from '../models/dentist';
 import { registerValidation, logInValidation } from '../middlewares/validateData';
 import { generateUserName } from '../helpers/generateUserName';
 
-
 export const signUp = asyncHandler(async (req: express.Request, res: express.Response) => {
     let newDentist = req.body;
 
@@ -52,6 +51,6 @@ export const signIn = asyncHandler(async (req: express.Request, res: express.Res
 
     const secret = process.env.ACCESS_TOKEN_SECRET || 'ACCESS TOKEN SECRET';
     const accessToken = jwt.sign({ dentistId: dentistFound._id }, secret);
-    res.header('auth-token', accessToken).json(dentistFound);
+    res.header('auth-token', `Bearer ${accessToken}`).json(dentistFound);
     return;
 });
