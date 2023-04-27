@@ -29,6 +29,16 @@ const dentistSchema = new mongoose.Schema({
         min: 6,
         max: 50,
     },
+    isVerified: {
+        type: Boolean,
+        default: false,
+    },
+    OTP: {
+        type: String,
+    },
+    OTPCreationTime: {
+        type: Date,
+    },
     yearsOfExperience: {
         type: Number,
     },

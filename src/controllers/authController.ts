@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 import Dentist from '../models/dentist';
 import { registerValidation, logInValidation } from '../middlewares/validateData';
 import { generateUserName } from '../helpers/generateUserName';
+import { sendOTPEmail } from '../helpers/generateOTP';
 
 export const signUp = asyncHandler(async (req: express.Request, res: express.Response) => {
     let newDentist = req.body;
@@ -24,8 +25,12 @@ export const signUp = asyncHandler(async (req: express.Request, res: express.Res
 
     newDentist.userName = generateUserName(newDentist.firstName, newDentist.lastName);
     newDentist.password = await bcrypt.hash(newDentist.password, 10);
+
+    newDentist.isVerified = false;
+    newDentist = await sendOTPEmail(newDentist);
+
     newDentist = await Dentist.create(newDentist);
-    res.status(201).json(newDentist);
+    res.sendStatus(201);
     return;
 });
 
@@ -36,21 +41,78 @@ export const signIn = asyncHandler(async (req: express.Request, res: express.Res
         return;
     }
 
-    const dentistFound = await Dentist.findOne({ email: req.body.email });
+    const foundDentist = await Dentist.findOne({ email: req.body.email });
 
-    if (!dentistFound) {
+    if (!foundDentist) {
         res.status(401).json({ error: 'Wrong email.' });
         return;
     }
 
-    const validPassword = await bcrypt.compare(req.body.password, dentistFound.password);
+    const validPassword = await bcrypt.compare(req.body.password, foundDentist.password);
     if (!validPassword) {
         res.status(401).json({ error: 'Wrong password.' });
         return;
     }
 
+    if (!foundDentist.isVerified) {
+        res.status(401).json('Unverified account.');
+        return;
+    }
+
     const secret = process.env.ACCESS_TOKEN_SECRET || 'ACCESS TOKEN SECRET';
-    const accessToken = jwt.sign({ dentistId: dentistFound._id }, secret);
-    res.header('auth-token', `Bearer ${accessToken}`).json(dentistFound);
+    const accessToken = jwt.sign({ dentistId: foundDentist._id }, secret);
+    res.header('auth-token', `Bearer ${accessToken}`).json(foundDentist);
+    return;
+});
+
+export const verifyAccount = asyncHandler(async (req, res) => {
+    const { email, OTP } = req.body;
+    const foundDentist = await Dentist.findOne({ email: email });
+
+    if (!foundDentist) {
+        res.status(401).json({ error: 'Wrong email.' });
+        return;
+    }
+
+    const currentDate = new Date();
+    const OTPCreationTime = new Date(foundDentist.OTPCreationTime);
+
+    if (OTP === null || OTP !== foundDentist.OTP) {
+        res.status(401).json('Invalid code.');
+        return;
+    }
+    if (currentDate.getTime() > (OTPCreationTime.getTime() + 5 * 60000)) {
+        res.status(401).json('Expired code.');
+        return;
+    }
+
+    // foundDentist.isVerified = true;
+    await Dentist.updateOne(
+        { email: foundDentist.email },
+        { $unset: { OTP: '', OTPCreationTime: '', isVerified: true } },
+    );
+
+    await Dentist.updateOne(
+        { email: foundDentist.email },
+        { $set: { isVerified: true } },
+    );
+    
+    res.sendStatus(200);
+    return;
+});
+
+export const generateNewOTP = asyncHandler(async (req, res) => {
+    const { email } = req.body;
+    let foundDentist = await Dentist.findOne({ email: email });
+
+    if (!foundDentist) {
+        res.status(401).json({ error: 'Wrong email.' });
+        return;
+    }
+
+    foundDentist = await sendOTPEmail(foundDentist);
+    await foundDentist.save();
+
+    res.sendStatus(201);
     return;
 });
