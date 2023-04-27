@@ -22,7 +22,7 @@ Make an application which dentists can use to diagnose specific abnormalities in
 
 **Response**
 	
-	- The `newDentist` object
+	- 'Created' message
 
 # SignIn
 
@@ -40,7 +40,39 @@ Make an application which dentists can use to diagnose specific abnormalities in
 	- jwt access token in auth-token header
 
 ---
-==**The following endpoints require access token (bearer token)**==
+
+# Verify Account
+
+`Post: http://localhost:3000/auth/verifyAccount`
+
+**Request**
+> Required fields
+
+	- email: string
+	- OTP: string
+
+**Response**
+	
+	- 'OK' message
+
+---
+
+# Generate New OTP
+
+`Post: http://localhost:3000/auth/newOTP`
+
+**Request**
+> Required fields
+
+	- email: string
+
+**Response**
+	
+	- 'Created' message
+
+---
+
+**The following endpoints require access token (bearer token)**
 ---
 
 # Add Patient
