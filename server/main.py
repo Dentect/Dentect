@@ -1,3 +1,5 @@
+import random
+import string
 import sys
 from flask import Flask, request
 import firebase_admin
@@ -9,11 +11,11 @@ import requests
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-from datetime import datetime
 
 from imageUpload import upload_blob
 
-sys.path.insert(1, '/home/tassneem-hamdy/Desktop/GP/dental-diseases-detection-model/yolov5')
+sys.path.insert(1, os.getenv('ROOT') + '/yolov5') # Ubuntu
+# sys.path.insert(1, os.getenv('ROOT') + '\yolov5') # Windows
 from model import detectDiseases
 
 app = Flask(__name__)
@@ -26,7 +28,9 @@ firebase_admin.initialize_app(credential, { 'storageBucket': os.getenv('BUCKET_U
 def controller():
     
     xrayURL = request.get_json()["xrayURL"]
-    xrayName = os.getenv('ROOT') + '/yolov5/runs/xrays/' + os.path.basename(Path(xrayURL)).split('?')[0].split('F')[1].split('-')[0] + '-' + str(datetime.now()) + '.jpg'
+    xrayName = os.path.join(os.getenv('ROOT') , 'yolov5','runs', 'xrays', \
+                (os.path.basename(Path(xrayURL)).split('?')[0].split('F')[1].split('-')[0] + '-')) \
+                + ''.join(random.choices(string.ascii_letters, k=10)) + '.jpg'
 
     urllib.request.urlretrieve(xrayURL, xrayName)
     detection = detectDiseases(xrayName)
