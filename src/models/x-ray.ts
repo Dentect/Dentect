@@ -8,7 +8,7 @@ const xraySchema = new mongoose.Schema({
     detectionURL: {
         type: String,
     },
-    report: {
+    dentistComment: {
         type: String,
     },
     xrayDate: {

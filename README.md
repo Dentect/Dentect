@@ -148,6 +148,20 @@ Make an application which dentists can use to diagnose specific abnormalities in
 	
 	- Array of `xrays` objects
 
+# Comment on Detection
+
+`Post: http://localhost:3000/patients/xrays/:xrayId`
+
+**Request**
+> Required fields
+
+	- dentistComment: string
+
+**Response**
+	
+	- `xray` object
+
+
 # Returned objects format
 > **Note: optional fields could be null**
 
@@ -193,7 +207,7 @@ patient = {
 xray = {
 	originalURL,
 	detectionURL,
-	report,
+	dentistComment,
 	xrayDate
 }
 ```

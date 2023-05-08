@@ -25,7 +25,6 @@ export const addPatientXray = asyncHandler(async (req: express.Request, res: exp
     const MODELURL = process.env.MODELURL || 'http://127.0.0.1:5000/detect';
     const response = await axios.post(MODELURL, { xrayURL: xray.originalURL });
     xray.detectionURL = response.data.detectionURL;
-    xray.report = response.data.report;
     xray.save();
 
     res.json({ xray });
@@ -50,5 +49,21 @@ export const getPatientXrays = asyncHandler(async (req: express.Request, res: ex
     );
 
     res.json(xrays);
+    return;
+});
+
+export const addDetectionComment = asyncHandler(async (req: express.Request, res: express.Response) => {
+    const { xrayId } = req.params;
+    const { dentistComment } = req.body;
+
+    const xray = await Xray.findById(xrayId);
+    if (!xray) {
+        res.status(401).json('Wrong x-ray id.');
+        return;
+    }
+    xray.dentistComment = dentistComment;
+    xray.save();
+
+    res.json(xray);
     return;
 });
