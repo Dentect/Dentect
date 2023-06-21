@@ -12,7 +12,7 @@ export const addPatientXray = asyncHandler(async (req: express.Request, res: exp
 
     const patient = await Patient.findOne({ clinicId: Number(patientClinicId) });
     if (!patient) {
-        res.status(401).json('Wrong patient clinic id.');
+        res.status(401).json({ error: 'Wrong patient clinic id!' });
         return;
     }
 
@@ -36,7 +36,7 @@ export const getPatientXrays = asyncHandler(async (req: express.Request, res: ex
 
     const patient = await Patient.findOne({ clinicId: Number(patientClinicId) });
     if (!patient) {
-        res.status(401).json('Wrong patient clinic id.');
+        res.status(401).json({ error: 'Wrong patient clinic id!' });
         return;
     }
 
@@ -58,7 +58,7 @@ export const addDetectionComment = asyncHandler(async (req: express.Request, res
 
     const xray = await Xray.findById(xrayId);
     if (!xray) {
-        res.status(401).json('Wrong x-ray id.');
+        res.status(401).json({ error: 'Wrong x-ray id!' });
         return;
     }
     xray.dentistComment = dentistComment;

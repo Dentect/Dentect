@@ -19,7 +19,7 @@ export const signUp = asyncHandler(async (req: express.Request, res: express.Res
 
     const userExists = await Dentist.findOne({ email: newDentist.email });
     if (userExists) {
-        res.status(400).json({ error: 'Email already exists.' });
+        res.status(400).json({ error: 'Email already exists!' });
         return;
     }
 
@@ -44,18 +44,18 @@ export const signIn = asyncHandler(async (req: express.Request, res: express.Res
     const foundDentist = await Dentist.findOne({ email: req.body.email });
 
     if (!foundDentist) {
-        res.status(401).json({ error: 'Wrong email.' });
+        res.status(401).json({ error: 'Wrong email!' });
         return;
     }
 
     const validPassword = await bcrypt.compare(req.body.password, foundDentist.password);
     if (!validPassword) {
-        res.status(401).json({ error: 'Wrong password.' });
+        res.status(401).json({ error: 'Wrong password!' });
         return;
     }
 
     if (!foundDentist.isVerified) {
-        res.status(401).json('Unverified account.');
+        res.status(401).json({ error: 'Unverified account!' });
         return;
     }
 
@@ -70,7 +70,7 @@ export const verifyAccount = asyncHandler(async (req, res) => {
     const foundDentist = await Dentist.findOne({ email: email });
 
     if (!foundDentist) {
-        res.status(401).json({ error: 'Wrong email.' });
+        res.status(401).json({ error: 'Wrong email!' });
         return;
     }
 
@@ -78,11 +78,11 @@ export const verifyAccount = asyncHandler(async (req, res) => {
     const OTPCreationTime = new Date(foundDentist.OTPCreationTime);
 
     if (OTP === null || OTP !== foundDentist.OTP) {
-        res.status(401).json('Invalid code.');
+        res.status(401).json({ error: 'Invalid code!' });
         return;
     }
     if (currentDate.getTime() > (OTPCreationTime.getTime() + 5 * 60000)) {
-        res.status(401).json('Expired code.');
+        res.status(401).json({ error: 'Expired code!' });
         return;
     }
 
@@ -106,7 +106,7 @@ export const generateNewOTP = asyncHandler(async (req, res) => {
     let foundDentist = await Dentist.findOne({ email: email });
 
     if (!foundDentist) {
-        res.status(401).json({ error: 'Wrong email.' });
+        res.status(401).json({ error: 'Wrong email!' });
         return;
     }
 
