@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 import Dentist from '../models/dentist';
 import Patient from '../models/patient';
-import { patientValidation } from '../middlewares/validateData';
+import { patientValidation, feedbackValidation } from '../middlewares/validateData';
 import { generateUserName } from '../helpers/generateUserName';
 import { calculateAge } from '../helpers/calculateAge';
 
@@ -20,7 +20,10 @@ export const addPatient = asyncHandler(async (req: express.Request, res: express
 
     const dentist = await Dentist.findById(dentistId);
 
-    const patientExists = _.find(dentist.patients, (patient) => patient.patientClinicId === patient.clinicId);
+    const patientExists = _.find(
+        dentist.patients,
+        (dentistPatient) => dentistPatient.patientClinicId === patient.clinicId,
+    );
     if (patientExists) {
         res.status(400).json({ error: 'Patient clinic id already exists!' });
         return;
@@ -37,6 +40,23 @@ export const addPatient = asyncHandler(async (req: express.Request, res: express
     await dentist.save();
 
     res.json(patient);
+    return;
+});
+
+export const addFeedback = asyncHandler(async (req: express.Request, res: express.Response) => {
+    const dentistId = req.dentistId;
+    let feedback = req.body;
+
+    const error = feedbackValidation(feedback);
+    if (error) {
+        res.status(400).json({ error: error.details[0].message });
+        return;
+    }
+
+    feedback.dentistId = dentistId;
+    feedback = await Patient.create(feedback);
+
+    res.json(feedback);
     return;
 });
 

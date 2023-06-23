@@ -40,3 +40,11 @@ export const patientValidation = (data: unknown) => {
 
     return schema.validate(data).error;
 };
+
+export const feedbackValidation = (data: unknown) => {
+    const schema = joi.object({
+        feedback: joi.string().required(),
+    });
+
+    return schema.validate(data).error;
+};
