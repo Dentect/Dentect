@@ -7,6 +7,7 @@ import Patient from '../models/patient';
 import { patientValidation, feedbackValidation } from '../middlewares/validateData';
 import { generateUserName } from '../helpers/generateUserName';
 import { calculateAge } from '../helpers/calculateAge';
+import Feedback from '../models/feedback';
 
 export const addPatient = asyncHandler(async (req: express.Request, res: express.Response) => {
     const dentistId = req.dentistId;
@@ -54,7 +55,7 @@ export const addFeedback = asyncHandler(async (req: express.Request, res: expres
     }
 
     feedback.dentistId = dentistId;
-    feedback = await Patient.create(feedback);
+    feedback = await Feedback.create(feedback);
 
     res.json(feedback);
     return;
