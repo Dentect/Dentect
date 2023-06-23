@@ -55,7 +55,7 @@ const dentistSchema = new mongoose.Schema({
     patients: [{
         patientId: {
             type: mongoose.Types.ObjectId,
-            ref: 'Patient',
+            ref: 'patients',
         },
         patientName: String,
         patientClinicId: Number,
