@@ -1,12 +1,12 @@
 import express from 'express';
 import asyncHandler from 'express-async-handler';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
 
 import Dentist from '../models/dentist';
 import { registerValidation, logInValidation } from '../middlewares/validateData';
 import { generateUserName } from '../helpers/generateUserName';
 import { sendOTPEmail } from '../helpers/generateOTP';
+import { generateToken } from '../helpers/generateToken';
 
 export const signUp = asyncHandler(async (req: express.Request, res: express.Response) => {
     let newDentist = req.body;
@@ -59,8 +59,7 @@ export const signIn = asyncHandler(async (req: express.Request, res: express.Res
         return;
     }
 
-    const secret = process.env.ACCESS_TOKEN_SECRET || 'ACCESS TOKEN SECRET';
-    const accessToken = jwt.sign({ dentistId: foundDentist._id }, secret);
+    const accessToken = generateToken(foundDentist._id);
     res.header('auth-token', `Bearer ${accessToken}`).json(foundDentist);
     return;
 });
@@ -97,7 +96,8 @@ export const verifyAccount = asyncHandler(async (req, res) => {
         { $set: { isVerified: true } },
     );
     
-    res.sendStatus(200);
+    const accessToken = generateToken(foundDentist._id);
+    res.header('auth-token', `Bearer ${accessToken}`).json(foundDentist);
     return;
 });
 
