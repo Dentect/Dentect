@@ -71,7 +71,7 @@ export const getPatient = asyncHandler(async (req: express.Request, res: express
         res.status(400).json({ error: 'Wrong patient clinic id!' });
         return;
     }
-    patient = await Patient.findOne({ _id: patient._id });
+    patient = await Patient.findById(patient.patientId);
     res.json(patient);
     return;
 });
@@ -91,7 +91,7 @@ export const editPatient = asyncHandler(async (req: express.Request, res: expres
         return;
     }
 
-    const patient = await Patient.findOne({ clinicId: patientClinicId });
+    const patient = await Patient.findById(dentist.patients[patientIndex].patientId);
     const updates = req.body;
     const updatedPatient = {
         ...patient.toObject(),

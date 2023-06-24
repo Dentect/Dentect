@@ -19,7 +19,7 @@ export const addPatientXray = asyncHandler(async (req: express.Request, res: exp
         res.status(400).json({ error: 'Wrong patient clinic id!' });
         return;
     }
-    patient = await Patient.findOne({ _id: patient._id });
+    patient = await Patient.findById(patient.patientId);
 
     let xray = req.body;
     xray.originalURL = req.body.originalURL;
@@ -46,7 +46,7 @@ export const getPatientXrays = asyncHandler(async (req: express.Request, res: ex
         res.status(400).json({ error: 'Wrong patient clinic id!' });
         return;
     }
-    patient = await Patient.findOne({ _id: patient._id });
+    patient = await Patient.findById(patient.patientId);
 
     const xrays: unknown[] = [];
     await Promise.all(
