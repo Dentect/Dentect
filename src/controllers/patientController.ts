@@ -4,17 +4,22 @@ import axios from 'axios';
 
 import Xray from '../models/x-ray';
 import Patient from '../models/patient';
+import Dentist from '../models/dentist';
+import _ from 'lodash';
 
 require('dotenv').config();
 
 export const addPatientXray = asyncHandler(async (req: express.Request, res: express.Response) => {
+    const dentistId = req.dentistId;
     const { patientClinicId } = req.params;
 
-    const patient = await Patient.findOne({ clinicId: Number(patientClinicId) });
-    if (!patient) {
+    const dentist = await Dentist.findById(dentistId);
+    const found = _.find(dentist.patients, (patient) => patient.patientClinicId === Number(patientClinicId));
+    if (!found) {
         res.status(401).json({ error: 'Wrong patient clinic id!' });
         return;
     }
+    const patient = await Patient.findOne({ clinicId: patientClinicId });
 
     let xray = req.body;
     xray.originalURL = req.body.originalURL;
@@ -32,13 +37,16 @@ export const addPatientXray = asyncHandler(async (req: express.Request, res: exp
 });
 
 export const getPatientXrays = asyncHandler(async (req: express.Request, res: express.Response) => {
+    const dentistId = req.dentistId;
     const { patientClinicId } = req.params;
 
-    const patient = await Patient.findOne({ clinicId: Number(patientClinicId) });
-    if (!patient) {
+    const dentist = await Dentist.findById(dentistId);
+    const found = _.find(dentist.patients, (patient) => patient.patientClinicId === Number(patientClinicId));
+    if (!found) {
         res.status(401).json({ error: 'Wrong patient clinic id!' });
         return;
     }
+    const patient = await Patient.findOne({ clinicId: patientClinicId });
 
     const xrays: unknown[] = [];
     await Promise.all(

@@ -59,7 +59,7 @@ export const signIn = asyncHandler(async (req: express.Request, res: express.Res
         return;
     }
 
-    const accessToken = generateToken(foundDentist._id);
+    const accessToken = await generateToken(foundDentist._id);
     res.header('auth-token', `Bearer ${accessToken}`).json(foundDentist);
     return;
 });
@@ -96,7 +96,7 @@ export const verifyAccount = asyncHandler(async (req, res) => {
         { $set: { isVerified: true } },
     );
     
-    const accessToken = generateToken(foundDentist._id);
+    const accessToken = await generateToken(foundDentist._id);
     res.header('auth-token', `Bearer ${accessToken}`).json(foundDentist);
     return;
 });

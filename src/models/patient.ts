@@ -30,7 +30,6 @@ const patientSchema = new mongoose.Schema({
     clinicId: {
         type: Number,
         required: true,
-        unique: true,
     },
     gender: {
         type: Gender,
