@@ -14,12 +14,12 @@ export const addPatientXray = asyncHandler(async (req: express.Request, res: exp
     const { patientClinicId } = req.params;
 
     const dentist = await Dentist.findById(dentistId);
-    const found = _.find(dentist.patients, (patient) => patient.patientClinicId === Number(patientClinicId));
-    if (!found) {
+    let patient = _.find(dentist.patients, (patient) => patient.patientClinicId === Number(patientClinicId));
+    if (!patient) {
         res.status(401).json({ error: 'Wrong patient clinic id!' });
         return;
     }
-    const patient = await Patient.findOne({ clinicId: patientClinicId });
+    patient = await Patient.findOne({ clinicId: patient._id });
 
     let xray = req.body;
     xray.originalURL = req.body.originalURL;
@@ -41,12 +41,12 @@ export const getPatientXrays = asyncHandler(async (req: express.Request, res: ex
     const { patientClinicId } = req.params;
 
     const dentist = await Dentist.findById(dentistId);
-    const found = _.find(dentist.patients, (patient) => patient.patientClinicId === Number(patientClinicId));
-    if (!found) {
+    let patient = _.find(dentist.patients, (patient) => patient.patientClinicId === Number(patientClinicId));
+    if (!patient) {
         res.status(401).json({ error: 'Wrong patient clinic id!' });
         return;
     }
-    const patient = await Patient.findOne({ clinicId: patientClinicId });
+    patient = await Patient.findOne({ clinicId: patient._id });
 
     const xrays: unknown[] = [];
     await Promise.all(
