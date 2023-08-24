@@ -23,7 +23,7 @@ An application dentists can use to diagnose specific abnormalities in less time 
 npm i
 ```
 
-3. Create `.env` file in the project's root directory and fill in the data according to the [.env.example](https://github.com/Dentect/dental-diseases-detection-backend/blob/main/.env.example) file.
+3. Create a `.env` file in the project's root directory and fill in the data according to the [.env.example](https://github.com/Dentect/dental-diseases-detection-backend/blob/main/.env.example) file.
 
 4. Now, run the server through:
 ```js
@@ -39,7 +39,7 @@ npm start run:dev
 | POST   | /auth/verifyAccount | - email: string <br/> - OTP: string | None | Verify Account | - 'OK' message |
 | POST   | /auth/newOTP | - email: string | None | Generate New OTP | - 'Created' message |
 
-> **Note: The following endpoints require access token (bearer token)**
+> **Note: The following endpoints require an access token (bearer token)**
 
 | HTTP Method | Endpoint | Required fields | Optional fields | Action | Response |
 | :---------- | :------- | :-------------- | :-------------- | :----- | :------- |
@@ -104,4 +104,4 @@ xray = {
 <br/><br/>
 
 ## License
-The backend is available under the [MIT License](https://github.com/Dentect/dental-diseases-detection-backend/blob/main/LICENSE).
+The back-end is available under the [MIT License](https://github.com/Dentect/dental-diseases-detection-backend/blob/main/LICENSE).
