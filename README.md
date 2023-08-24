@@ -29,7 +29,7 @@ npm i
 ```js
 npm start run:dev
 ```
-<br/><br/>
+<br/>
 
 ## API Endpoints
 | HTTP Method | Endpoint | Required fields | Optional fields | Action | Response |
@@ -50,7 +50,7 @@ npm start run:dev
 | GET    | /patients/:patientClinicId/xrays | None | None | Get Patient Xrays | - Array of `xrays` objects |
 | POST   | /patients/xrays/:xrayId` | dentistComment: string | None | Comment on Detection | - `xray` object |
 
-<br/><br/>
+<br/>
 
 ## Returned objects format
 > **Note: optional fields could be null**
@@ -101,7 +101,7 @@ xray = {
 	xrayDate
 }
 ```
-<br/><br/>
+<br/>
 
 ## License
 The back-end is available under the [MIT License](https://github.com/Dentect/dental-diseases-detection-backend/blob/main/LICENSE).
