@@ -1,168 +1,57 @@
-# dental-diseases-detection-backend
-Make an application which dentists can use to diagnose specific abnormalities in less time and with better accuracy. Detecting dental anomalies from panoramic dental radiography.
+# Dentect for Dental Diseases Detection - BE
+An application dentists can use to diagnose specific abnormalities in less time and with better accuracy using panoramic dental radiography.
+<br/><br/>
 
-# SignUp
+## Used Technologies
+* [NodeJS](https://nodejs.org/)
+* [ExpressJS](https://www.expresjs.org/)
+* [MongoDB](https://www.mongodb.com/)
+* [Mongoose ODM](https://mongoosejs.com/) 
+* [Firebase](https://firebase.google.com/)
+* [JSON Web Token](https://jwt.io/)
+* [Nodemailer](https://nodemailer.com/)
+* [Bcrypt.js](https://www.npmjs.com/package/bcrypt)
+* [Multer](https://www.npmjs.com/package/multer)
+* [joi](https://joi.dev/)
+<br/><br/>
 
-`Post: http://localhost:3000/auth/signUp`
+## Running the server
+1. To run the server, the first step is downloading and installing [NodeJS](https://nodejs.org/en/download) on your machine. <br/>
 
-**Request**
-> Required fields
+2. Open a terminal, navigate to the project's directory, and run the following command to install the needed packages:
+```js
+npm i
+```
 
-	- firstName: string
-	- lastName: string
-	- email: string
-	- password: string
-	- medicalId: string
- 
-> Optional fields
+3. Create `.env` file in the project's root directory and fill in the data according to the [.env.example](https://github.com/Dentect/dental-diseases-detection-backend/blob/main/.env.example) file.
 
-	- yearsOfExperience: number
-	- clinicAddress: string
-	- clinicPhone: string
+4. Now, run the server through:
+```js
+npm start run:dev
+```
+<br/><br/>
 
-**Response**
-	
-	- 'Created' message
+## API Endpoints
+| HTTP Method | Endpoint | Required fields | Optional fields | Action | Response |
+| :---------- | :------- | :-------------- | :-------------- | :----- | :------- |
+| POST   | /auth/signUp | - firstName: string <br/> - lastName: string <br/> - email: string <br/> - password: string <br/> - medicalId: string | - yearsOfExperience: number <br/> - clinicAddress: string <br/> - clinicPhone: string | SignUp | - 'Created' message |
+| POST   | /auth/signIp | - email: string <br/> - password: string | None | SignIn | - The `dentistFound` object <br/> - jwt access token in auth-token header |
+| POST   | /auth/verifyAccount | - email: string <br/> - OTP: string | None | Verify Account | - 'OK' message |
+| POST   | /auth/newOTP | - email: string | None | Generate New OTP | - 'Created' message |
 
-# SignIn
+### The following endpoints require access token (bearer token)
+| HTTP Method | Endpoint | Required fields | Optional fields | Action | Response |
+| :---------- | :------- | :-------------- | :-------------- | :----- | :------- |
+| POST   | /dentists/patients | firstName: string <br/> middleName: string <br/> lastName: string <br/> clinicId: number <br/> gender: string <br/> birthDate: date '2000-06-17' | email: string <br/> phone: string <br/> medicalHistory: string <br/> dentalHistory: string | Add Patient | - The created `patient` object |
+| GET    | /dentists/patients/:patientClinicId | None | None | Get Patient |
+| Patch  | /dentists/patients/:patientClinicId | None | All fields could be edited | Edit Patient | - The `updatedPatient` object |
+| POST   | /patients/:patientClinicId/xrays | xray: image <br/> birthDate: date '2000-06-17' <br/> note: both are attached as form-data | None | Add Patient Xray (Detect) | - The created `xray` object |
+| GET    | /patients/:patientClinicId/xrays | None | None | Get Patient Xrays | - Array of `xrays` objects |
+| POST   | /patients/xrays/:xrayId` | dentistComment: string | None | Comment on Detection | - `xray` object |
 
-`Post: http://localhost:3000/auth/signIp`
+<br/><br/>
 
-**Request**
-> Required fields
-
-	- email: string
-	- password: string
-
-**Response**
-	
-	- The `dentistFound` object
-	- jwt access token in auth-token header
-
----
-
-# Verify Account
-
-`Post: http://localhost:3000/auth/verifyAccount`
-
-**Request**
-> Required fields
-
-	- email: string
-	- OTP: string
-
-**Response**
-	
-	- 'OK' message
-
----
-
-# Generate New OTP
-
-`Post: http://localhost:3000/auth/newOTP`
-
-**Request**
-> Required fields
-
-	- email: string
-
-**Response**
-	
-	- 'Created' message
-
----
-
-**The following endpoints require access token (bearer token)**
----
-
-# Add Patient
-
-`Post: http://localhost:3000/dentists/patients`
-
-**Request**
-> Required fields
-
-	- firstName: string
-	- lastName: string
-	- middleName: string
-	- clinicId: number
-	- gender: string
-	- birthDate: date '2000-06-17'
- 
-> Optional fields
-
-	- email: string
-	- phone: string
-	- medicalHistory: string
-	- dentalHistory: string
-
-**Response**
-	
-	- The created `patient` object
-
-# Get Patient
-
-`Get: http://localhost:3000/dentists/patients/:patientClinicId`
-
-**Response**
-	
-	- The requested `patient` object
-
-# Edit Patient
-
-`Patch: http://localhost:3000/dentists/patients/:patientClinicId`
- 
-**Request**
-> Optional fields
-
-	- All fields could be edited
-
-**Response**
-	
-	- The `updatedPatient` object
-
----
-==**The following endpoints require patientClinicId as a req param**==
----
-
-# Add Patient Xray (Detect)
-
-`Post: http://localhost:3000/patients/:patientClinicId/xrays`
-
-**Request**
-> Required fields
-
-	- xray: image
-	- xrayDate: date
-	note: both are attached as form-data
-
-**Response**
-	
-	- The created `xray` object
-
-# Get Patient Xrays
-
-`Get: http://localhost:3000/patients/:patientClinicId/xrays`
-
-**Response**
-	
-	- Array of `xrays` objects
-
-# Comment on Detection
-
-`Post: http://localhost:3000/patients/xrays/:xrayId`
-
-**Request**
-> Required fields
-
-	- dentistComment: string
-
-**Response**
-	
-	- `xray` object
-
-
-# Returned objects format
+## Returned objects format
 > **Note: optional fields could be null**
 
 ```js
@@ -211,3 +100,7 @@ xray = {
 	xrayDate
 }
 ```
+<br/><br/>
+
+## License
+The backend is available under the [MIT License](https://github.com/Dentect/dental-diseases-detection-backend/blob/main/LICENSE).
