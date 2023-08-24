@@ -39,7 +39,8 @@ npm start run:dev
 | POST   | /auth/verifyAccount | - email: string <br/> - OTP: string | None | Verify Account | - 'OK' message |
 | POST   | /auth/newOTP | - email: string | None | Generate New OTP | - 'Created' message |
 
-### The following endpoints require access token (bearer token)
+> **Note: The following endpoints require access token (bearer token)**
+
 | HTTP Method | Endpoint | Required fields | Optional fields | Action | Response |
 | :---------- | :------- | :-------------- | :-------------- | :----- | :------- |
 | POST   | /dentists/patients | firstName: string <br/> middleName: string <br/> lastName: string <br/> clinicId: number <br/> gender: string <br/> birthDate: date '2000-06-17' | email: string <br/> phone: string <br/> medicalHistory: string <br/> dentalHistory: string | Add Patient | - The created `patient` object |
