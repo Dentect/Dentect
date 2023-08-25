@@ -1,6 +1,7 @@
 # Dentect for Dental Diseases Detection - BE
 An application dentists can use to diagnose specific abnormalities in less time and with better accuracy using panoramic dental radiography.
-<br/><br/>
+
+<br/>
 
 ## Used Technologies
 * [NodeJS](https://nodejs.org/)
@@ -13,7 +14,8 @@ An application dentists can use to diagnose specific abnormalities in less time 
 * [Bcrypt.js](https://www.npmjs.com/package/bcrypt)
 * [Multer](https://www.npmjs.com/package/multer)
 * [joi](https://joi.dev/)
-<br/><br/>
+
+<br/>
 
 ## Running the server
 1. To run the server, the first step is downloading and installing [NodeJS](https://nodejs.org/en/download) on your machine. <br/>
