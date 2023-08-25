@@ -21,14 +21,14 @@ An application dentists can use to diagnose specific abnormalities in less time 
 1. To run the server, the first step is downloading and installing [NodeJS](https://nodejs.org/en/download) on your machine. <br/>
 
 2. Open a terminal, navigate to the project's directory, and run the following command to install the needed packages:
-```
+``` bash
 npm i
 ```
 
 3. Create a `.env` file in the project's root directory and fill in the data according to the [.env.example](https://github.com/Dentect/dental-diseases-detection-backend/blob/main/.env.example) file.
 
 4. Now, run the server through:
-```
+``` bash
 npm start run:dev
 ```
 <br/>
