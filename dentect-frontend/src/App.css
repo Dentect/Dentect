@@ -1,0 +1,254 @@
+body {
+  font-family: 'Akshar', sans-serif;
+  background-color: #088CAA;
+  background-image: url('./assets/image\ 15.png');
+  /* background-repeat: no-repeat; */
+  background-size: cover;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  margin: 0%;
+  overflow-x: hidden;
+}
+
+
+h2 {
+  /* width: 583px; */
+  font-style: normal;
+  font-weight: 400;
+  font-size: 60px;
+  color: #ffffff;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+h1 {
+  width: 583px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 92px;
+  text-align: center;
+  color: #088CAA;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.Home {
+  background-image: url('./assets/Home.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.homeBox {
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 54px;
+  margin: auto;
+  margin-top: 10%;
+  width: 50%;
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+input[type="file"] {
+  display: none;
+}
+input[type='radio'] { 
+  transform: scale(2); 
+  margin: 10px;
+}
+
+
+.navbar {
+  background-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 2px 2px 2px rgba(9, 9, 9, 0.23);
+  transition: 0.4s; /* Adds a transition effect when the padding is decreased */
+}
+
+
+.upload {
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 54px;
+  margin: auto;
+  width: 70%;
+  height: 90%;
+  text-align: center;
+}
+
+
+.buttons {
+  background: #088CAA;
+  border-radius: 18px;
+  border-color: transparent;
+  color: white;
+  font-weight: bold;
+  font-size: 30px;
+  width: 322px;
+  height: 95px;
+}
+
+.navButtons {
+  background: #088CAA;
+  border-radius: 18px;
+  border-color: transparent;
+  color: white;
+  font-weight: bold;
+  font-size: 30px;
+  align-items:center;
+  width: 200px;
+  height: 104px;
+}
+
+.nav-link{
+  color: white !important;
+}
+
+.images {
+  /* left: calc(50% - 750px/2 - 0.2px);
+  top: calc(50% - 600px/2 - 0.01px); */
+  height: 100%;
+  width: 93%;
+}
+
+li{
+  list-style-type:none;
+  align-items: start;
+  font-size: xx-large;
+  font-style: oblique;
+}
+
+.patientInfo{
+  margin: auto;
+  width: 50%;
+  height: 60%;
+  background: rgba(217, 217, 217, 0.6);
+  border-radius: 14px;
+  text-align: start;
+    
+}
+
+
+/* Register from */
+.FormImage {
+  align-items: center;
+  justify-content: center;
+}
+
+
+.form-wrapper {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 54px;
+  padding: 40px;
+  margin: 50px;
+}
+
+.dataStyle{
+  font-size: 30px;
+  color: #088CAA;
+  font-weight: bold;
+  margin-right: 20px;
+}
+
+.gender{
+  font-size: x-large;
+  border-radius: 5px;
+  border-color: transparent;
+  border-radius: 14px;
+}
+
+.inputData {
+  padding: 10px 10px;
+  font-size: x-large;
+  border-radius: 5px;
+  background: rgba(217, 217, 217, 0.6);
+  border-color: transparent;
+  border-radius: 14px;
+}
+
+
+
+.buttons:hover {
+  background-color: #088caabc;
+  color: #fefefe;
+}
+
+.navButtons:hover{
+  background-color: #088caabc;
+  color: #fefefe;
+ 
+}
+
+.data {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.submit {
+  align-items: center;
+}
+
+.loading{
+  position: absolute;
+  width:100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.9);
+
+}
+
+
+
+/* stars */
+
+.stars {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 100px;
+}
+.on {
+  color: #f9e001;
+}
+.off {
+  color: #ccc;
+}
+
+.newUpload{
+  position: absolute;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 54px;
+  width: 50%;
+  height: 70%;
+  left: 494px;
+  top: 197px;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+}
+
+.popup-content {
+  background: rgba(255, 255, 255, 0.923);
+  border-radius: 14px;
+  padding: 10px;
+  font-size: xx-large;
+  width: 30%;
+}
+.popup-overlay {
+  background: rgba(0, 0, 0, 0.5);
+}
+[data-popup='tooltip'].popup-overlay {
+  background: transparent;
+}
