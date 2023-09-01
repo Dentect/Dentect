@@ -1,5 +1,5 @@
 # Dentect for Dental Diseases Detection - BE
-An application dentists can use to diagnose specific abnormalities in less time and with better accuracy using panoramic dental radiography.
+A website application that dentists can use to diagnose specific abnormalities in less time and with better accuracy using panoramic dental radiography.
 
 <br/>
 
